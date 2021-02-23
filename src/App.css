@@ -1,0 +1,15 @@
+main {
+  display: grid;
+  place-items: center;
+  background: #d4d4d4;
+  color: #0e0e0e;
+}
+
+.button__randomimage {
+  background: linear-gradient(160deg, #6d6d6d, #5c5c5c);
+  color: #d4d4d4;
+  padding: 1rem;
+  margin: 1rem;
+  border: solid 1px #3c3c3c;
+  border-radius: 10px;
+}
