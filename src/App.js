@@ -1,33 +1,38 @@
-import React from "react";
+/*global google*/
+import React, { useState } from "react";
 import "./App.css";
-// import PlacesAutocomplete, {
-//   geocodeByAddress,
-// } from "react-places-autocomplete";
 
 function App() {
-  // const [address, setAddress] = useState("");
+  const [input, setInput] = useState("");
 
-  // const handleSelect = async (value) => {};
+  const handleInputChange = (event) => {
+    setInput(event.target.value);
+
+    const displaySuggestions = function (predictions) {
+      console.log(predictions);
+      console.log(predictions[0].description);
+    };
+    const autocomplete = new google.maps.places.AutocompleteService();
+    autocomplete.getQueryPredictions(
+      { input: event.target.value },
+      displaySuggestions
+    );
+  };
 
   return (
     <main>
       <h1>Autocompletion Search</h1>
-      <form /*onSubmit={handleSubmit}*/>
+      <form>
         <label>Suche nach einem Ort:</label>
         <input
           type="text"
-          placeholder="Ort eingeben" /*value={searchInput} onChange={handleSearchInputChange} onSelect={}*/
+          placeholder="Ort eingeben"
+          required="required"
+          value={input}
+          onChange={handleInputChange} /*onSelect={handleSelect}*/
         />
       </form>
-      {/* <div>
-        <PlacesAutocomplete
-          value={address}
-          onChange={setAddress}
-          onSelect={handleSelect}
-        >
-          {() => <div>Test</div>}
-        </PlacesAutocomplete>
-      </div> */}
+      {/* {predictions && <p>{predictions}</p>} */}
     </main>
   );
 }
