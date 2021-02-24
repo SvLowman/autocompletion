@@ -9,12 +9,19 @@ const GlobalStyle = createGlobalStyle`
 }
 
 :root {
-  --background: #d4d4d4;
+  --selected: blue;
+  --background: cyan;
+  --paper: white;
+  --label-background: lightgray;
 }
 
 body {
   margin: 0;
   font-size: 16px;
+}
+
+h1 {
+    color: var(--paper);
 }
 `;
 

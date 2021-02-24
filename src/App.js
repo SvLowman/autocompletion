@@ -5,9 +5,55 @@ import GlobalStyle from "./globalStyle";
 
 const FormContainer = styled.div`
   background: var(--background);
+  padding: 2rem 0 6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const SearchForm = styled.form`
+  border: solid 1px rebeccapurple;
+  margin-top: 1rem;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 70px auto;
+  grid-template-rows: auto auto;
+`;
+
+const SearchLabel = styled.label`
+  border: solid 1px black;
+  background: var(--label-background);
+  text-align: center;
+  padding: calc(1rem - 3px);
+  width: 70px;
+`;
+
+const SearchInput = styled.input`
+  border: solid 1px black;
+  background: var(--paper);
+  padding: 1rem 1.5rem;
+  width: 100%;
+`;
+
+const PredictionContainer = styled.ul`
+  border: solid 1px hotpink;
+  background: var(--paper);
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  min-width: calc(80% - 70px);
+  grid-column-start: 2;
+`;
+
+const PredictionButton = styled.button`
+  border: none;
+  text-align: left;
+  padding: 0.5rem 1.5rem;
+  width: 100%;
+  :hover {
+    background: var(--selected);
+    color: var(--paper);
+  }
 `;
 
 function App() {
@@ -44,24 +90,28 @@ function App() {
       <GlobalStyle />
       <FormContainer>
         <h1>Autocompletion Search</h1>
-        <form>
-          <label>Suche nach einem Ort:</label>
-          <input
+        <SearchForm>
+          <SearchLabel>🔎</SearchLabel>
+          <SearchInput
             type="text"
             placeholder="Ort eingeben"
             required="required"
             value={input}
             onChange={handleInputChange} /*onSelect={handleSelect}*/
           />
-        </form>
-        {predictionData &&
-          resultDisplay &&
-          input !== "" &&
-          predictionData.map((predictionObject, index) => (
-            <button key={index} onClick={() => selectPlace(index)}>
-              {predictionObject.description}
-            </button>
-          ))}
+          <PredictionContainer>
+            {predictionData &&
+              resultDisplay &&
+              input !== "" &&
+              predictionData.map((predictionObject, index) => (
+                <li key={index}>
+                  <PredictionButton onClick={() => selectPlace(index)}>
+                    {predictionObject.description}
+                  </PredictionButton>
+                </li>
+              ))}
+          </PredictionContainer>
+        </SearchForm>
       </FormContainer>
     </main>
   );
