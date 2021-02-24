@@ -4,6 +4,11 @@ import "./App.css";
 
 function App() {
   const [input, setInput] = useState("");
+  const [predictionData, setPredictionData] = useState([]);
+
+  const selectPlace = (index) => {
+    setInput(predictionData[index].description);
+  };
 
   const handleInputChange = (event) => {
     setInput(event.target.value);
@@ -11,6 +16,7 @@ function App() {
     const displaySuggestions = function (predictions) {
       console.log(predictions);
       console.log(predictions[0].description);
+      setPredictionData(predictions);
     };
     const autocomplete = new google.maps.places.AutocompleteService();
     autocomplete.getQueryPredictions(
@@ -18,6 +24,8 @@ function App() {
       displaySuggestions
     );
   };
+
+  console.log(predictionData);
 
   return (
     <main>
@@ -32,7 +40,12 @@ function App() {
           onChange={handleInputChange} /*onSelect={handleSelect}*/
         />
       </form>
-      {/* {predictions && <p>{predictions}</p>} */}
+      {predictionData &&
+        predictionData.map((predictionObject, index) => (
+          <button key={index} onClick={() => selectPlace(index)}>
+            {predictionObject.description}
+          </button>
+        ))}
     </main>
   );
 }
