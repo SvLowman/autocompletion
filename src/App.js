@@ -1,21 +1,24 @@
 /*global google*/
-import React, { useState } from "react";
+import React, { useState /*useEffect*/ } from "react";
 import "./App.css";
 
 function App() {
   const [input, setInput] = useState("");
   const [predictionData, setPredictionData] = useState([]);
+  const [resultDisplay, setResultDisplay] = useState(false);
+
+  // useEffect(() => {}, []);
 
   const selectPlace = (index) => {
     setInput(predictionData[index].description);
+    setResultDisplay(false);
   };
 
   const handleInputChange = (event) => {
     setInput(event.target.value);
+    setResultDisplay(true);
 
     const displaySuggestions = function (predictions) {
-      console.log(predictions);
-      console.log(predictions[0].description);
       setPredictionData(predictions);
     };
     const autocomplete = new google.maps.places.AutocompleteService();
@@ -25,7 +28,8 @@ function App() {
     );
   };
 
-  console.log(predictionData);
+  console.log("Input:", input);
+  console.log("Pred. Data:", predictionData);
 
   return (
     <main>
@@ -41,6 +45,8 @@ function App() {
         />
       </form>
       {predictionData &&
+        resultDisplay &&
+        input !== "" &&
         predictionData.map((predictionObject, index) => (
           <button key={index} onClick={() => selectPlace(index)}>
             {predictionObject.description}
