@@ -1,6 +1,14 @@
 /*global google*/
 import React, { useState /*useEffect*/ } from "react";
-import "./App.css";
+import styled from "styled-components/macro";
+import GlobalStyle from "./globalStyle";
+
+const FormContainer = styled.div`
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 function App() {
   const [input, setInput] = useState("");
@@ -33,25 +41,28 @@ function App() {
 
   return (
     <main>
-      <h1>Autocompletion Search</h1>
-      <form>
-        <label>Suche nach einem Ort:</label>
-        <input
-          type="text"
-          placeholder="Ort eingeben"
-          required="required"
-          value={input}
-          onChange={handleInputChange} /*onSelect={handleSelect}*/
-        />
-      </form>
-      {predictionData &&
-        resultDisplay &&
-        input !== "" &&
-        predictionData.map((predictionObject, index) => (
-          <button key={index} onClick={() => selectPlace(index)}>
-            {predictionObject.description}
-          </button>
-        ))}
+      <GlobalStyle />
+      <FormContainer>
+        <h1>Autocompletion Search</h1>
+        <form>
+          <label>Suche nach einem Ort:</label>
+          <input
+            type="text"
+            placeholder="Ort eingeben"
+            required="required"
+            value={input}
+            onChange={handleInputChange} /*onSelect={handleSelect}*/
+          />
+        </form>
+        {predictionData &&
+          resultDisplay &&
+          input !== "" &&
+          predictionData.map((predictionObject, index) => (
+            <button key={index} onClick={() => selectPlace(index)}>
+              {predictionObject.description}
+            </button>
+          ))}
+      </FormContainer>
     </main>
   );
 }
