@@ -48,13 +48,17 @@ const SearchInput = styled.input`
   width: 100%;
 `;
 
-const PredictionContainer = styled.ul`
-  border-left: solid 1px var(--selected);
+const PredictionContainer = styled.div`
+  grid-column-start: 2;
+`;
+
+const PredictionTable = styled.ul`
+  border: solid 1px var(--selected);
   list-style-type: none;
   padding: 0;
   margin: 0;
-  width: calc(100% - 2rem);
-  grid-column-start: 2;
+  max-width: calc(100% - 2rem);
+  position: absolute;
 `;
 
 const PredictionButton = styled.button`
@@ -65,6 +69,7 @@ const PredictionButton = styled.button`
   text-align: left;
   padding: 0.5rem 1.5rem;
   width: 100%;
+  cursor: pointer;
   :hover {
     background: var(--selected);
     color: var(--paper);
@@ -115,16 +120,18 @@ function App() {
             onChange={handleInputChange} /*onSelect={handleSelect}*/
           />
           <PredictionContainer>
-            {predictionData &&
-              resultDisplay &&
-              input !== "" &&
-              predictionData.map((predictionObject, index) => (
-                <li key={index}>
-                  <PredictionButton onClick={() => selectPlace(index)}>
-                    {predictionObject.description}
-                  </PredictionButton>
-                </li>
-              ))}
+            <PredictionTable>
+              {predictionData &&
+                resultDisplay &&
+                input !== "" &&
+                predictionData.map((predictionObject, index) => (
+                  <li key={index}>
+                    <PredictionButton onClick={() => selectPlace(index)}>
+                      {predictionObject.description}
+                    </PredictionButton>
+                  </li>
+                ))}
+            </PredictionTable>
           </PredictionContainer>
         </SearchForm>
       </FormContainer>
