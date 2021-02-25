@@ -95,15 +95,13 @@ function App() {
     const displaySuggestions = function (predictions) {
       setPredictionData(predictions);
     };
+
     const autocomplete = new google.maps.places.AutocompleteService();
     autocomplete.getQueryPredictions(
       { input: event.target.value },
       displaySuggestions
     );
   };
-
-  console.log("Input:", input);
-  console.log("Pred. Data:", predictionData);
 
   return (
     <main>
@@ -117,7 +115,7 @@ function App() {
             placeholder="Ort eingeben"
             required="required"
             value={input}
-            onChange={handleInputChange} /*onSelect={handleSelect}*/
+            onChange={handleInputChange}
           />
           <PredictionContainer>
             <PredictionTable>
