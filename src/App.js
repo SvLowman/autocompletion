@@ -1,5 +1,5 @@
 /*global google*/
-import React, { useState /*useEffect*/ } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import GlobalStyle from "./globalStyle";
 
@@ -81,7 +81,14 @@ function App() {
   const [predictionData, setPredictionData] = useState([]);
   const [resultDisplay, setResultDisplay] = useState(false);
 
-  // useEffect(() => {}, []);
+  useEffect(() => {
+    try {
+      const autocomplete = new google.maps.places.AutocompleteService();
+      autocomplete.getQueryPredictions({ input }, setPredictionData);
+    } catch (error) {
+      console.log("error:", error);
+    }
+  }, [input]);
 
   const selectPlace = (index) => {
     setInput(predictionData[index].description);
@@ -89,18 +96,9 @@ function App() {
   };
 
   const handleInputChange = (event) => {
-    setInput(event.target.value);
+    const inputValue = event.target.value;
+    setInput(inputValue);
     setResultDisplay(true);
-
-    const displaySuggestions = function (predictions) {
-      setPredictionData(predictions);
-    };
-
-    const autocomplete = new google.maps.places.AutocompleteService();
-    autocomplete.getQueryPredictions(
-      { input: event.target.value },
-      displaySuggestions
-    );
   };
 
   return (
